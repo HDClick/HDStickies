@@ -1,5 +1,7 @@
 # HDStickies
 
+https://github.com/HDClick/HDStickies/blob/main/screenshot.jpg
+
 > Floating markdown sticky notes that live natively in your Obsidian vault — no plugin, no sync, Obsidian doesn't even need to be running.
 
 ![macOS](https://img.shields.io/badge/macOS-13.0%2B-blue)
