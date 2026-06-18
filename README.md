@@ -20,6 +20,7 @@ HDStickies is a macOS utility that lives in your menu bar and lets you create be
 
 Every note is saved as a plain `.md` file directly into any folder you choose — including your **Obsidian vault**. No plugin required. No sync service. No proprietary format. Just markdown files, exactly where you want them.
 
+However, you don’t need to be an Obsidian user. It will save all your notes to the folder of your choice as markdown files.
 ---
 
 ## Why HDStickies?
