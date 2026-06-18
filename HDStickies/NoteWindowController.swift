@@ -9,6 +9,7 @@ import AppKit
 import SwiftUI
 
 class NoteWindowController: NSWindowController {
+    private var dragController: WindowDragController?
 
     let noteID: String
     let viewModel: NoteViewModel
@@ -29,6 +30,8 @@ class NoteWindowController: NSWindowController {
 
         super.init(window: window)
         window.delegate = self
+        // Attach pan gesture for drag strip — must be after super.init
+        self.dragController = WindowDragController(window: window)
     }
 
     // ---- Restored note (from saved state) ----
@@ -44,6 +47,8 @@ class NoteWindowController: NSWindowController {
 
         super.init(window: window)
         window.delegate = self
+        // Attach pan gesture for drag strip — must be after super.init
+        self.dragController = WindowDragController(window: window)
     }
 
     private static func makeWindow(x: CGFloat, y: CGFloat, width: CGFloat, height: CGFloat) -> NoteWindow {
@@ -53,12 +58,22 @@ class NoteWindowController: NSWindowController {
             backing: .buffered,
             defer: false
         )
-        window.isMovableByWindowBackground = true
+        // Drag via hover strip at top — not whole background
+        window.isMovableByWindowBackground = false
         window.isOpaque = false
         window.backgroundColor = .clear
         window.level = .floating
         window.hasShadow = true
-        window.minSize = NSSize(width: 200, height: 40)
+        window.minSize = NSSize(width: 220, height: 120)
+
+        // Liquid Glass needs the window to be transparent
+        // so the glass effect can see through to what's behind
+        let liquidGlass = UserDefaults.standard.bool(forKey: "LiquidGlass")
+        if liquidGlass {
+            window.backgroundColor = .clear
+            window.isOpaque = false
+        }
+
         return window
     }
 

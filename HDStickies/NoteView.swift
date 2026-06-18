@@ -17,6 +17,7 @@ struct NoteView: View {
 
     // ObservedObject means: redraw when viewModel publishes changes
     @ObservedObject var viewModel: NoteViewModel
+    @AppStorage("LiquidGlass") private var liquidGlass = false
 
     // Local UI state (dropdowns, save status)
     @State private var showListMenu  = false
@@ -40,9 +41,13 @@ struct NoteView: View {
                 bottomBar
             }
         }
-        .background(viewModel.noteColor.background)
         .foregroundColor(viewModel.noteColor.textColor)
+        .modifier(LiquidGlassModifier(
+            enabled: liquidGlass,
+            fallbackColor: viewModel.noteColor.background
+        ))
         .clipShape(RoundedRectangle(cornerRadius: 16))
+
         .background(WindowAccessor { window in
             self.hostingWindow = window
             updateWindowSize()
@@ -438,8 +443,8 @@ struct NoteView: View {
         panel.prompt = "Insert Image"
         panel.begin { response in
             guard response == .OK, let url = panel.url else { return }
-            let altText = url.deletingPathExtension().lastPathComponent
-            let markdown = "![\(altText)](\(url.path))"
+            // Obsidian wiki-style — filename only, no full path
+            let markdown = "![[\(url.lastPathComponent)]]"
             DispatchQueue.main.async {
                 if let tv = self.textView {
                     tv.insertText(markdown, replacementRange: tv.selectedRange())

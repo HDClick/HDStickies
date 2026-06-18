@@ -17,6 +17,7 @@ struct SettingsView: View {
 
     // Launch at Login toggle
     @AppStorage("LaunchAtLogin") private var launchAtLogin = false
+    @AppStorage("LiquidGlass") private var liquidGlass = false
 
     // Default note colour
     @AppStorage("DefaultNoteColor") private var defaultColorName = "red"
@@ -50,6 +51,18 @@ struct SettingsView: View {
                     .onChange(of: launchAtLogin) { value in
                         LaunchAtLogin.setEnabled(value)
                     }
+            }
+
+            if #available(macOS 26.0, *) {
+                settingsRow {
+                    VStack(alignment: .leading, spacing: 4) {
+                        Toggle("Liquid Glass Notes", isOn: $liquidGlass)
+                            .toggleStyle(.switch)
+                        Text("Applies Apple\'s Liquid Glass effect to floating notes")
+                            .font(.system(size: 11))
+                            .foregroundColor(.secondary)
+                    }
+                }
             }
 
             settingsRow {
@@ -203,7 +216,7 @@ struct SettingsView: View {
                 HStack {
                     Text("HDStickies")
                     Spacer()
-                    Text("Version 1.0")
+                    Text("Version 1.2")
                         .foregroundColor(.secondary)
                 }
             }
@@ -215,6 +228,24 @@ struct SettingsView: View {
                         .foregroundColor(.secondary)
                 }
             }
+
+            // HDPro footer link
+            Divider().padding(.vertical, 4)
+            Button(action: {
+                if let url = URL(string: "https://github.com/HDClick?tab=repositories") {
+                    NSWorkspace.shared.open(url)
+                }
+            }) {
+                Text("Part of HDPro — View all apps")
+                    .font(.system(size: 11))
+                    .foregroundColor(.secondary)
+            }
+            .buttonStyle(.plain)
+            .onHover { hovering in
+                if hovering { NSCursor.pointingHand.push() }
+                else { NSCursor.pop() }
+            }
+            .padding(.bottom, 4)
         }
         .padding(24)
         .frame(width: 400)

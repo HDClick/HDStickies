@@ -25,6 +25,8 @@
 		B016 /* ExportManager.swift in Sources */       = {isa = PBXBuildFile; fileRef = A016; };
 		B017 /* AppState.swift in Sources */            = {isa = PBXBuildFile; fileRef = A017; };
 		B018 /* ListContinuationTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A018; };
+		B020 /* LiquidGlassModifier.swift in Sources */  = {isa = PBXBuildFile; fileRef = A020; };
+		B021 /* DragHandleView.swift in Sources */       = {isa = PBXBuildFile; fileRef = A021; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +48,8 @@
 		A016 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportManager.swift; sourceTree = "<group>"; };
 		A017 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		A018 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListContinuationTextView.swift; sourceTree = "<group>"; };
+		A020 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiquidGlassModifier.swift; sourceTree = "<group>"; };
+		A021 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragHandleView.swift; sourceTree = "<group>"; };
 		AAPP = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HDStickies.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -66,7 +70,7 @@
 		};
 		sourceGroup = {
 			isa = PBXGroup;
-			children = (A001, A002, A003, A004, A005, A006, A007, A008, A009, A010, A011, A012, A013, A014, A015, A016, A017, A018);
+			children = (A001, A002, A003, A004, A005, A006, A007, A008, A009, A010, A011, A012, A013, A014, A015, A016, A017, A018, A020, A021);
 			path = HDStickies;
 			sourceTree = "<group>";
 		};
@@ -127,7 +131,7 @@
 		C001 = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
-			files = (B001, B002, B003, B004, B005, B007, B008, B009, B010, B011, B012, B013, B014, B015, B016, B017, B018);
+			files = (B001, B002, B003, B004, B005, B007, B008, B009, B010, B011, B012, B013, B014, B015, B016, B017, B018, B020, B021);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
