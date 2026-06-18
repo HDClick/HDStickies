@@ -10,8 +10,6 @@
 
 ---
 
-![HDStickies in action](screenshot.png)
-
 ![HDStickies Liquid Glass](screenshot-glass.png)
 
 ---
