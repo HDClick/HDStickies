@@ -250,7 +250,7 @@ struct CalloutDialogView: View {
         // Build the Obsidian callout markdown
         // Format: > [!type+/-] Optional Title
         //         > Content
-        let typePart  = "[!\(selectedType.id)\(collapseState.suffix)]"
+        let typePart  = "[!\(selectedType.id)]\(collapseState.suffix)"
         let titlePart = title.isEmpty ? "" : " \(title)"
         let header    = "> \(typePart)\(titlePart)"
 

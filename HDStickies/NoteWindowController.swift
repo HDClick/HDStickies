@@ -138,8 +138,10 @@ extension NoteWindowController: NSWindowDelegate {
 
         // Safe filename from title
         let safeTitle = title
+            .replacingOccurrences(of: "/", with: "-")
+            .replacingOccurrences(of: ":", with: "-")
+            .trimmingCharacters(in: .whitespacesAndNewlines)
             .replacingOccurrences(of: " ", with: "-")
-            .components(separatedBy: CharacterSet.punctuationCharacters).joined()
 
         let fileName = "\(safeTitle)-\(noteID.prefix(8)).md"
         let fileURL = folder.appendingPathComponent(fileName)
