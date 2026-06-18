@@ -6,10 +6,13 @@
 ![Swift](https://img.shields.io/badge/Swift-5.0-orange)
 ![License](https://img.shields.io/badge/license-Personal-green)
 ![Part of HDPro](https://img.shields.io/badge/HDPro-Family-purple)
+![Liquid Glass](https://img.shields.io/badge/macOS_26-Liquid_Glass-blue)
 
 ---
 
-![HDStickies in action](screenshot-glass.png)
+![HDStickies in action](screenshot.png)
+
+![HDStickies Liquid Glass](screenshot-glass.png)
 
 ---
 
@@ -41,6 +44,7 @@ HDStickies does none of that. Your notes are plain `.md` files in your vault the
 - Multiple notes open simultaneously — no cap
 - Notes reopen exactly where you left them on relaunch
 - Rich solid colour themes — Red, Green, Blue, Yellow, Orange, Purple, Gray
+- **Liquid Glass** mode on macOS 26 — Apple's stunning translucent glass effect (toggle in Settings)
 
 ### Markdown Formatting
 Full formatting toolbar on every note:
@@ -132,6 +136,7 @@ Three export options under **Menu Bar → Export Notes**:
 - **Default Save Folder** — point it at your Obsidian vault
 - **Default Font & Size**
 - **Global Hotkey Recorder** — change any hotkey to whatever you like
+- **Liquid Glass** — toggle Apple's glass effect on floating notes (macOS 26+ only)
 
 ### Menu Bar Icon
 - 8 built-in SF Symbol options
@@ -159,6 +164,7 @@ HDStickies is built with Xcode and runs on your own Mac — no App Store, no not
 ### Requirements
 - macOS 13.0 (Ventura) or later
 - Xcode 15 or later
+- macOS 26 required for Liquid Glass effect (solid colours on older versions)
 
 ### Build from Source
 
