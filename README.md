@@ -9,7 +9,7 @@
 
 ---
 
-![HDStickies in action](screenshot.png)
+![HDStickies in action](screenshot-glass.png)
 
 ---
 
