@@ -219,7 +219,7 @@ struct MenuBarSearchView: View {
 
                     // Parse title, colour, date from YAML
                     var title = url.deletingPathExtension().lastPathComponent
-                    var color: NoteColor = .yellow
+                    var color: NoteColor = .red
                     var date = ""
                     var body = raw
 
@@ -231,7 +231,7 @@ struct MenuBarSearchView: View {
                             let t = line.trimmingCharacters(in: .whitespaces)
                             if t == "---" { endIdx = i; break }
                             if t.lowercased().hasPrefix("color:") {
-                                color = NoteColor(rawValue: t.replacingOccurrences(of: "color:", with: "", options: .caseInsensitive).trimmingCharacters(in: .whitespacesAndNewlines).lowercased()) ?? .yellow
+                                color = NoteColor(rawValue: t.replacingOccurrences(of: "color:", with: "", options: .caseInsensitive).trimmingCharacters(in: .whitespacesAndNewlines).lowercased()) ?? .red
                             }
                             if t.lowercased().hasPrefix("date:") {
                                 date = t.replacingOccurrences(of: "date:", with: "", options: .caseInsensitive).trimmingCharacters(in: .whitespacesAndNewlines)

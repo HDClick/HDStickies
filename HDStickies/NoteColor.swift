@@ -1,89 +1,76 @@
 // ============================================================
 // NoteColor.swift
 // ============================================================
-// Defines the colour options for sticky notes.
-// In Delphi you might use a TColor constant — here we use
-// a Swift "enum" which is a clean way to define a set of
-// named options with associated values.
+// v5 — clean solid colours: Red, Green, Blue, Yellow,
+// Orange, Purple, Gray. Simple names, rich solid tones.
 // ============================================================
 
 import SwiftUI
 
-// The available note background colours
 enum NoteColor: String, CaseIterable, Identifiable {
-    case yellow  = "yellow"
-    case orange  = "orange"
-    case green   = "green"
-    case blue    = "blue"
-    case pink    = "pink"
-    case purple  = "purple"
-    case white   = "white"
-    case dark    = "dark"
+    case red    = "red"
+    case green  = "green"
+    case blue   = "blue"
+    case yellow = "yellow"
+    case orange = "orange"
+    case purple = "purple"
+    case gray   = "gray"
 
-    // Identifiable conformance — needed for SwiftUI lists/pickers
-    var id: String { self.rawValue }
+    var id: String { rawValue }
 
-    // --------------------------------------------------------
-    // background — the main fill colour of the note
-    // --------------------------------------------------------
     var background: Color {
         switch self {
-        case .yellow:  return Color(red: 1.0,  green: 0.96, blue: 0.60)  // Warm yellow
-        case .orange:  return Color(red: 1.0,  green: 0.82, blue: 0.55)  // Soft orange
-        case .green:   return Color(red: 0.75, green: 0.95, blue: 0.70)  // Mint green
-        case .blue:    return Color(red: 0.65, green: 0.85, blue: 1.0)   // Sky blue
-        case .pink:    return Color(red: 1.0,  green: 0.75, blue: 0.85)  // Soft pink
-        case .purple:  return Color(red: 0.85, green: 0.75, blue: 1.0)   // Lavender
-        case .white:   return Color(red: 0.98, green: 0.98, blue: 0.98)  // Off white
-        case .dark:    return Color(red: 0.18, green: 0.18, blue: 0.22)  // Dark slate
+        case .red:    return Color(red: 0.55, green: 0.07, blue: 0.09)
+        case .green:  return Color(red: 0.08, green: 0.30, blue: 0.15)
+        case .blue:   return Color(red: 0.05, green: 0.22, blue: 0.42)
+        case .yellow: return Color(red: 0.50, green: 0.38, blue: 0.02)
+        case .orange: return Color(red: 0.55, green: 0.25, blue: 0.02)
+        case .purple: return Color(red: 0.28, green: 0.08, blue: 0.38)
+        case .gray:   return Color(red: 0.20, green: 0.20, blue: 0.22)
         }
     }
 
-    // --------------------------------------------------------
-    // textColor — text colour that contrasts with the background
-    // Dark note gets light text, all others get dark text
-    // --------------------------------------------------------
     var textColor: Color {
-        switch self {
-        case .dark:    return Color(red: 0.92, green: 0.92, blue: 0.95)  // Light text
-        default:       return Color(red: 0.15, green: 0.15, blue: 0.18)  // Dark text
-        }
+        Color(red: 0.93, green: 0.93, blue: 0.95)
     }
 
-    // --------------------------------------------------------
-    // toolbarColor — slightly darker/lighter than background
-    // Used for the toolbar strip at the top of the note
-    // --------------------------------------------------------
     var toolbarColor: Color {
-        switch self {
-        case .dark:    return Color(red: 0.12, green: 0.12, blue: 0.16)
-        default:       return background.opacity(0.7)
-        }
+        background.opacity(0.8)
     }
 
-    // --------------------------------------------------------
-    // accentColor — used for button highlights and icons
-    // --------------------------------------------------------
     var accentColor: Color {
         switch self {
-        case .dark:    return Color(red: 0.95, green: 0.85, blue: 0.40)  // Gold on dark
-        default:       return Color(red: 0.20, green: 0.20, blue: 0.25).opacity(0.6)
+        case .red:    return Color(red: 1.0,  green: 0.60, blue: 0.60)
+        case .green:  return Color(red: 0.60, green: 1.0,  blue: 0.70)
+        case .blue:   return Color(red: 0.50, green: 0.85, blue: 1.0)
+        case .yellow: return Color(red: 1.0,  green: 0.90, blue: 0.40)
+        case .orange: return Color(red: 1.0,  green: 0.75, blue: 0.40)
+        case .purple: return Color(red: 0.85, green: 0.60, blue: 1.0)
+        case .gray:   return Color(red: 0.85, green: 0.85, blue: 0.85)
         }
     }
 
-    // --------------------------------------------------------
-    // emoji — shown in the colour picker for each option
-    // --------------------------------------------------------
+    var displayName: String {
+        switch self {
+        case .red:    return "Red"
+        case .green:  return "Green"
+        case .blue:   return "Blue"
+        case .yellow: return "Yellow"
+        case .orange: return "Orange"
+        case .purple: return "Purple"
+        case .gray:   return "Gray"
+        }
+    }
+
     var emoji: String {
         switch self {
-        case .yellow:  return "🟡"
-        case .orange:  return "🟠"
-        case .green:   return "🟢"
-        case .blue:    return "🔵"
-        case .pink:    return "🩷"
-        case .purple:  return "🟣"
-        case .white:   return "⚪"
-        case .dark:    return "⚫"
+        case .red:    return "🔴"
+        case .green:  return "🟢"
+        case .blue:   return "🔵"
+        case .yellow: return "🟡"
+        case .orange: return "🟠"
+        case .purple: return "🟣"
+        case .gray:   return "⚫"
         }
     }
 }

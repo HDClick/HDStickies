@@ -1,13 +1,15 @@
 # HDStickies
 
-https://github.com/HDClick/HDStickies/blob/main/screenshot.jpg
-
 > Floating markdown sticky notes that live natively in your Obsidian vault — no plugin, no sync, Obsidian doesn't even need to be running.
 
 ![macOS](https://img.shields.io/badge/macOS-13.0%2B-blue)
 ![Swift](https://img.shields.io/badge/Swift-5.0-orange)
 ![License](https://img.shields.io/badge/license-Personal-green)
 ![Part of HDPro](https://img.shields.io/badge/HDPro-Family-purple)
+
+---
+
+![HDStickies in action](screenshot.png)
 
 ---
 
@@ -38,6 +40,7 @@ HDStickies does none of that. Your notes are plain `.md` files in your vault the
 - Collapse to a slim title strip with one click, expand again when needed
 - Multiple notes open simultaneously — no cap
 - Notes reopen exactly where you left them on relaunch
+- Rich solid colour themes — Red, Green, Blue, Yellow, Orange, Purple, Gray
 
 ### Markdown Formatting
 Full formatting toolbar on every note:
@@ -52,10 +55,17 @@ Full formatting toolbar on every note:
 | Bullet & numbered lists | Toolbar |
 | Checklists | Toolbar or `- [ ] text` |
 | Code block | Toolbar or ` ``` ` |
-| Inline code | Toolbar or `` `code` `` |
+| Inline quote | Toolbar — wraps selection in `` `backticks` `` |
 | Link | Toolbar → dialog (Name + URL) |
 | Image | Toolbar → file picker |
 | Callout | Toolbar → dialog (Obsidian-style) |
+
+### List Continuation
+Press **Enter** after a list item and the next line automatically continues the list:
+- `- item` → next line starts with `- `
+- `1. item` → next line starts with `2. `
+- `- [ ] task` → next line starts with `- [ ] `
+- Press Enter on an empty list item to end the list
 
 ### Obsidian Callouts
 Insert any Obsidian callout type directly from a dialog:
@@ -64,7 +74,7 @@ Insert any Obsidian callout type directly from a dialog:
 - Inserts proper `> [!type]` markdown syntax
 
 ### Note Colours
-8 pastel colour themes per note — Yellow, Orange, Green, Blue, Pink, Purple, White, Dark.
+7 rich solid colour themes — Red, Green, Blue, Yellow, Orange, Purple, Gray.
 Set a default colour in Settings, or choose **Random** for a different colour every time.
 
 ### Saves as Markdown
@@ -72,7 +82,7 @@ Every note saves as a `.md` file with full YAML frontmatter:
 
 ```markdown
 ---
-Date: 2026-06-17
+Date: 2026-06-18
 Color: blue
 Tags: HDStickies
 ---
@@ -91,11 +101,13 @@ A full-featured editor window showing all your notes in one place:
 
 - Sidebar lists every `.md` file in your save folder
 - Colour stripe per note — click to change colour
+- Whole window takes on the selected note's colour
 - Full inline editor — no separate window opens
 - Auto-saves when switching between notes
+- **Shift-click** to select multiple notes, then delete them all at once
 - Pin notes to the top of the sidebar
-- Search within the editor
-- Right-click → Delete or Show in Finder
+- Search within the sidebar
+- Right-click → Delete, Show in Finder, Pin to Top
 
 ### Menu Bar Search
 Search across all your notes instantly:
@@ -203,12 +215,6 @@ Both apps work great together — use HDClick hotkeys to trigger HDStickies glob
 - **AppKit** — floating windows, menu bar, global hotkeys via `CGEventTap`
 - **ServiceManagement** — Launch at Login
 - Plain `.md` files — no database, no CoreData
-
----
-
-## License
-
-Built for personal use. Free to use, modify and share.
 
 ---
 

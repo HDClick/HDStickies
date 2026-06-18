@@ -12,9 +12,12 @@ class NoteWindowController: NSWindowController {
 
     let noteID: String
     let viewModel: NoteViewModel
+    // If set, saves back to this URL on close (used for "Open as Floating")
+    var saveURL: URL? = nil
 
     // ---- New note ----
-    init(viewModel: NoteViewModel, offset: CGFloat = 0) {
+    init(viewModel: NoteViewModel, offset: CGFloat = 0, saveURL: URL? = nil) {
+        self.saveURL = saveURL
         self.noteID = viewModel.id
         self.viewModel = viewModel
 

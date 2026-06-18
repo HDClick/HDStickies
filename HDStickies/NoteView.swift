@@ -42,7 +42,7 @@ struct NoteView: View {
         }
         .background(viewModel.noteColor.background)
         .foregroundColor(viewModel.noteColor.textColor)
-        .clipShape(RoundedRectangle(cornerRadius: 10))
+        .clipShape(RoundedRectangle(cornerRadius: 16))
         .background(WindowAccessor { window in
             self.hostingWindow = window
             updateWindowSize()
@@ -160,7 +160,7 @@ struct NoteView: View {
         }
         .padding(10)
         .frame(width: 200)
-        .background(Color(NSColor.darkGray).opacity(0.97))
+        .background(Color.black.opacity(0.92))
     }
 
     // ============================================================
@@ -185,7 +185,7 @@ struct NoteView: View {
             menuRow(icon: "chevron.left.forwardslash.chevron.right", label: "Code Block") {
                 insertCodeBlock()
             }
-            menuRow(icon: "chevron.left.slash.chevron.right",        label: "Inline Code")  { wrapSelection(prefix: "`", suffix: "`") }
+            menuRow(icon: "quote.opening",                           label: "Quote")         { wrapSelectionAsQuote() }
             menuRow(icon: "link",                  label: "Link…")         { insertLink() }
             menuRow(icon: "photo",                 label: "Image…")        { insertImage() }
             menuRow(icon: "text.badge.plus",       label: "Callout…")      { insertCallout() }
@@ -224,7 +224,7 @@ struct NoteView: View {
         }
         .padding(10)
         .frame(width: 220)
-        .background(Color(NSColor.darkGray).opacity(0.97))
+        .background(Color.black.opacity(0.92))
     }
 
     // ============================================================
@@ -265,7 +265,7 @@ struct NoteView: View {
                             ))
                     }
                     .buttonStyle(.plain)
-                    .help(color.rawValue)
+                    .help(color.displayName)
                 }
             }
             .padding(.vertical, 5)
@@ -273,7 +273,7 @@ struct NoteView: View {
         }
         .padding(10)
         .frame(width: 220)
-        .background(Color(NSColor.darkGray).opacity(0.97))
+        .background(Color.black.opacity(0.92))
     }
 
     // ============================================================
@@ -450,6 +450,23 @@ struct NoteView: View {
         }
     }
 
+    // Wrap selected text in backticks `TEXT`
+    private func wrapSelectionAsQuote() {
+        showTextMenu = false
+        guard let tv = textView else {
+            viewModel.content += "`text`"
+            return
+        }
+        let range = tv.selectedRange()
+        if range.length > 0, let r = Range(range, in: tv.string) {
+            let selected = String(tv.string[r])
+            tv.insertText("`\(selected)`", replacementRange: range)
+        } else {
+            tv.insertText("`text`", replacementRange: range)
+            tv.setSelectedRange(NSRange(location: range.location + 1, length: 4))
+        }
+    }
+
     // Open callout dialog
     private func insertCallout() {
         showTextMenu = false
@@ -546,8 +563,28 @@ struct SelectionAwareTextEditor: NSViewRepresentable {
     var onTextViewReady: (NSTextView) -> Void
 
     func makeNSView(context: Context) -> NSScrollView {
-        let scrollView = NSTextView.scrollableTextView()
-        guard let textView = scrollView.documentView as? NSTextView else { return scrollView }
+        let scrollView = NSScrollView()
+        scrollView.hasVerticalScroller = true
+        scrollView.hasHorizontalScroller = false
+        scrollView.drawsBackground = false
+        scrollView.borderType = .noBorder
+
+        let textView = ListContinuationTextView()
+        let containerSize = CGSize(width: scrollView.contentSize.width, height: CGFloat.greatestFiniteMagnitude)
+        let container = NSTextContainer(containerSize: containerSize)
+        container.widthTracksTextView = true
+        let layoutManager = NSLayoutManager()
+        let storage = NSTextStorage()
+        storage.addLayoutManager(layoutManager)
+        layoutManager.addTextContainer(container)
+        textView.minSize = NSSize(width: 0, height: scrollView.contentSize.height)
+        textView.maxSize = NSSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude)
+        textView.isVerticallyResizable = true
+        textView.isHorizontallyResizable = false
+        textView.autoresizingMask = [.width]
+        textView.textContainer?.containerSize = containerSize
+        textView.textContainer?.widthTracksTextView = true
+        scrollView.documentView = textView
 
         textView.delegate = context.coordinator
         textView.isRichText = false

@@ -34,6 +34,9 @@ class NoteWindowManager: ObservableObject {
     @Published var viewModels: [NoteViewModel] = []
 
     private var noteWindows: [NoteWindowController] = []
+    // Tracks windows opened via "Open as Floating" from All Notes
+    // keyed by file URL path so we can detect duplicates
+
     private let persistenceKey = "HDStickies_OpenNotes"
 
     var saveFolder: URL? {
@@ -51,7 +54,7 @@ class NoteWindowManager: ObservableObject {
     // --------------------------------------------------------
     // createNewNote()
     // --------------------------------------------------------
-    func createNewNote(withColor color: NoteColor = .yellow) {
+    func createNewNote(withColor color: NoteColor = .red) {
         let noteID = UUID().uuidString
         let offset = CGFloat(noteWindows.count % 8) * 24
 
@@ -76,10 +79,17 @@ class NoteWindowManager: ObservableObject {
     }
 
     // --------------------------------------------------------
+    // createFloatingNote() — opens an existing .md file as a
+    // floating note without creating a new file on disk.
+    // Saves back to existingURL on close.
+    // --------------------------------------------------------
+
+
+    // --------------------------------------------------------
     // createNote(from state) — restores a saved note
     // --------------------------------------------------------
     func createNote(from state: NoteState) {
-        let color = NoteColor(rawValue: state.colorName) ?? .yellow
+        let color = NoteColor(rawValue: state.colorName) ?? .red
 
         // Strip YAML frontmatter from content if present
         // This ensures the floating note editor never shows --- blocks

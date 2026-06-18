@@ -314,7 +314,14 @@ class MenuBarManager: NSObject {
             window.minSize = NSSize(width: 600, height: 400)
             window.center()
             window.isReleasedWhenClosed = false
-            window.level = NSWindow.Level(rawValue: Int(CGWindowLevelForKey(.floatingWindow)) + 1)
+            // Normal window level — not always on top
+            window.level = .normal
+
+            // Make title bar transparent so note colour fills the whole window
+            window.titlebarAppearsTransparent = true
+            window.isOpaque = false
+            window.backgroundColor = NSColor(NoteColor.red.background)
+
             allNotesWindow = window
         }
         allNotesWindow?.makeKeyAndOrderFront(nil)
@@ -403,10 +410,10 @@ class MenuBarManager: NSObject {
     // ============================================================
 
     @objc private func newNote() {
-        let saved = UserDefaults.standard.string(forKey: "DefaultNoteColor") ?? "yellow"
+        let saved = UserDefaults.standard.string(forKey: "DefaultNoteColor") ?? "red"
         let color: NoteColor = saved == "random"
-            ? (NoteColor.allCases.randomElement() ?? .yellow)
-            : (NoteColor(rawValue: saved) ?? .yellow)
+            ? (NoteColor.allCases.randomElement() ?? .red)
+            : (NoteColor(rawValue: saved) ?? .red)
         NoteWindowManager.shared.createNewNote(withColor: color)
         NSApp.activate(ignoringOtherApps: true)
     }

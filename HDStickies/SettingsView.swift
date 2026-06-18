@@ -19,7 +19,7 @@ struct SettingsView: View {
     @AppStorage("LaunchAtLogin") private var launchAtLogin = false
 
     // Default note colour
-    @AppStorage("DefaultNoteColor") private var defaultColorName = "yellow"
+    @AppStorage("DefaultNoteColor") private var defaultColorName = "red"
 
     // Default font
     @AppStorage("DefaultFontName") private var defaultFontName = "System"
@@ -70,7 +70,7 @@ struct SettingsView: View {
                                         ))
                                 }
                                 .buttonStyle(.plain)
-                                .help(color.rawValue)
+                                .help(color.displayName)
                             }
 
                             // Random option — rainbow gradient circle
