@@ -1,6 +1,6 @@
 # HDStickies
 
-## Desktop sticky notes that save as plain Markdown files—Obsidian optional.
+### Desktop sticky notes that save as plain Markdown files—Obsidian optional.
 
 > Floating markdown sticky notes that live natively in your Obsidian vault — no plugin, no sync, Obsidian doesn't even need to be running.
 
