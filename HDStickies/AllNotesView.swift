@@ -254,6 +254,11 @@ class AllNotesViewModel: ObservableObject {
         let hasContent = !editingContent.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
         guard hasTitle || hasContent else { return }
 
+        // CRITICAL: Only save if the file already exists on disk
+        // This prevents All Notes from creating a ghost file for notes
+        // that are still open as floating windows and haven't saved yet
+        guard FileManager.default.fileExists(atPath: note.url.path) else { return }
+
         let df = DateFormatter()
         df.dateFormat = "yyyy-MM-dd"
         let today = df.string(from: Date())

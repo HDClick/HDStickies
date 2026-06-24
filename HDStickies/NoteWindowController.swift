@@ -23,7 +23,7 @@ class NoteWindowController: NSWindowController {
         self.viewModel = viewModel
 
         let window = NoteWindowController.makeWindow(
-            x: 120 + offset, y: 120 + offset, width: 280, height: 320
+            x: 120 + offset, y: 120 + offset, width: 360, height: 360
         )
         let view = NoteView(viewModel: viewModel)
         window.contentView = NSHostingView(rootView: view)
@@ -136,9 +136,6 @@ extension NoteWindowController: NSWindowDelegate {
     // Called on window close and on app quit.
     // --------------------------------------------------------
     func saveNoteToFile() {
-        // Don't save if note is completely empty — no title, no content
-        // This means creating a note and closing it without typing anything
-        // leaves zero files on disk
         let hasTitle   = !viewModel.title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
         let hasContent = !viewModel.content.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
         guard hasTitle || hasContent else {
@@ -151,12 +148,14 @@ extension NoteWindowController: NSWindowDelegate {
 
         let title = viewModel.title.isEmpty ? "Untitled Note" : viewModel.title
 
-        // Safe filename from title
-        let safeTitle = title
-            .replacingOccurrences(of: "/", with: "-")
-            .replacingOccurrences(of: ":", with: "-")
-            .trimmingCharacters(in: .whitespacesAndNewlines)
-            .replacingOccurrences(of: " ", with: "-")
+        // Safe filename — if no title use just the noteID so the
+        // filename is stable and never creates duplicate "Untitled" files
+        let safeTitle = viewModel.title.isEmpty ? noteID.prefix(8).description :
+            viewModel.title
+                .replacingOccurrences(of: "/", with: "-")
+                .replacingOccurrences(of: ":", with: "-")
+                .trimmingCharacters(in: .whitespacesAndNewlines)
+                .replacingOccurrences(of: " ", with: "-")
 
         let fileName = "\(safeTitle)-\(noteID.prefix(8)).md"
         let fileURL = folder.appendingPathComponent(fileName)

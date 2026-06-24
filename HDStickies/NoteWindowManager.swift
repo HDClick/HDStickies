@@ -52,6 +52,14 @@ class NoteWindowManager: ObservableObject {
     }
 
     // --------------------------------------------------------
+    // controller(forID:) — returns the window controller for a note ID
+    // Used by NoteView's Save button to call saveNoteToFile directly
+    // --------------------------------------------------------
+    func controller(forID id: String) -> NoteWindowController? {
+        return noteWindows.first { $0.noteID == id }
+    }
+
+    // --------------------------------------------------------
     // createNewNote()
     // --------------------------------------------------------
     func createNewNote(withColor color: NoteColor = .red) {
@@ -71,7 +79,8 @@ class NoteWindowManager: ObservableObject {
 
         let controller = NoteWindowController(viewModel: vm, offset: offset)
         noteWindows.append(controller)
-        viewModels.append(vm)
+        // Don't add to viewModels yet — only add after note is saved to disk
+        // This prevents ghost entries in All Notes sidebar for unsaved notes
         controller.showWindow(nil)
         // Centre new notes on screen — restored notes keep their saved position
         controller.centreOnScreen()
@@ -239,9 +248,14 @@ class NoteWindowManager: ObservableObject {
 
     func saveNote(id: String, title: String, content: String) {
         guard let folder = saveFolder else { return }
-        let safeTitle = title.isEmpty ? "Untitled-Note" : title
-            .replacingOccurrences(of: " ", with: "-")
-            .components(separatedBy: CharacterSet.punctuationCharacters).joined()
+        // Use same filename logic as NoteWindowController.saveNoteToFile
+        // so Save button and window-close always write to the same file
+        let safeTitle = title.isEmpty ? id.prefix(8).description :
+            title
+                .replacingOccurrences(of: "/", with: "-")
+                .replacingOccurrences(of: ":", with: "-")
+                .trimmingCharacters(in: .whitespacesAndNewlines)
+                .replacingOccurrences(of: " ", with: "-")
         let fileName = "\(safeTitle)-\(id.prefix(8)).md"
         let fileURL = folder.appendingPathComponent(fileName)
         do {

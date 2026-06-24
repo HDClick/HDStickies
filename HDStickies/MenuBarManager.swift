@@ -303,8 +303,9 @@ class MenuBarManager: NSObject {
             let hosting = NSHostingController(rootView: view)
 
             // Use contentRect init so we can set styleMask at creation time
+            // Wider default size — 900x600 instead of 780x520
             let window = NSWindow(
-                contentRect: NSRect(x: 0, y: 0, width: 780, height: 520),
+                contentRect: NSRect(x: 0, y: 0, width: 900, height: 600),
                 styleMask: [.titled, .closable, .resizable, .fullSizeContentView, .miniaturizable],
                 backing: .buffered,
                 defer: false
@@ -312,8 +313,17 @@ class MenuBarManager: NSObject {
             window.contentViewController = hosting
             window.title = "HDStickies — All Notes"
             window.minSize = NSSize(width: 600, height: 400)
-            window.center()
             window.isReleasedWhenClosed = false
+
+            // Remember window position between app launches.
+            // setFrameAutosaveName checks for a saved frame first —
+            // if none exists (first run ever), it falls through and
+            // we centre it manually below.
+            let autosaveName = "HDStickiesAllNotesWindow"
+            let hadSavedFrame = window.setFrameAutosaveName(autosaveName)
+            if !hadSavedFrame {
+                window.center()
+            }
             // Normal window level — not always on top
             window.level = .normal
 

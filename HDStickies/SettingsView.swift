@@ -216,7 +216,7 @@ struct SettingsView: View {
                 HStack {
                     Text("HDStickies")
                     Spacer()
-                    Text("Version 1.2")
+                    Text("Version 1.3")
                         .foregroundColor(.secondary)
                 }
             }

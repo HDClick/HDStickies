@@ -526,27 +526,20 @@ struct NoteView: View {
 
     private func autoSave() {
         guard NoteWindowManager.shared.saveFolder != nil else { return }
+        // Don't auto-save until user has entered a title
+        // This prevents creating "Untitled Note.md" prematurely
+        // The note will be saved properly when the window closes
+        guard !viewModel.title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else { return }
         performSave()
     }
 
     private func performSave() {
-        let title = viewModel.title.isEmpty ? "Untitled Note" : viewModel.title
-
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        let todayString = dateFormatter.string(from: Date())
-
-        let fullContent = """
----
-Date: \(todayString)
----
-
-# \(title)
-
-\(viewModel.content)
-"""
-        NoteWindowManager.shared.saveNote(id: viewModel.id, title: title, content: fullContent)
-
+        // Delegate to the window controller's saveNoteToFile so both
+        // the Save button and window-close use IDENTICAL filename logic
+        // and write complete YAML frontmatter (Color, Tags, Date)
+        if let controller = NoteWindowManager.shared.controller(forID: viewModel.id) {
+            controller.saveNoteToFile()
+        }
         let timeFormatter = DateFormatter()
         timeFormatter.timeStyle = .short
         lastSaved = "Saved \(timeFormatter.string(from: Date()))"

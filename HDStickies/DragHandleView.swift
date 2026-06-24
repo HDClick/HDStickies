@@ -27,17 +27,17 @@ class WindowDragController: NSObject {
     private func handle(_ event: NSEvent) {
         guard let window = window else { return }
 
+        // Only handle events that belong to THIS window
+        guard event.window === window else { return }
+
         switch event.type {
         case .leftMouseDown:
-            // event.locationInWindow: y=0 at BOTTOM, so top strip = high y
             let y = event.locationInWindow.y
             let h = window.frame.height
             isDragging = (y >= h - stripHeight)
 
         case .leftMouseDragged:
             guard isDragging else { return }
-            // event.deltaX/deltaY give per-event movement in points
-            // deltaY is already flipped for screen coordinates
             window.setFrameOrigin(NSPoint(
                 x: window.frame.origin.x + event.deltaX,
                 y: window.frame.origin.y - event.deltaY
