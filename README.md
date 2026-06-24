@@ -161,7 +161,11 @@ All three hotkeys are fully customisable in Settings — change any of them to w
 
 ## Installation
 
-HDStickies is built with Xcode and runs on your own Mac — no App Store, no notarisation required for personal use.
+### How to install:
+1. Click the link above and download the `.dmg` file from the **Assets** section.
+2. Drag **HDStickies** into your **Applications** folder.
+3. Grant Accessibility permission when prompted (required for global hotkeys)
+4. Open it and start typing!
 
 ### Requirements
 - macOS 13.0 (Ventura) or later
@@ -169,6 +173,8 @@ HDStickies is built with Xcode and runs on your own Mac — no App Store, no not
 - macOS 26 required for Liquid Glass effect (solid colours on older versions)
 
 ### Build from Source
+
+HDStickies is built with Xcode and runs on your own Mac — no App Store, no notarisation required for personal use.
 
 1. Clone or download this repository
 2. Open `HDStickies.xcodeproj` in Xcode
